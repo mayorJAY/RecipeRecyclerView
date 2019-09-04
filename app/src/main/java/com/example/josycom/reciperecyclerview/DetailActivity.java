@@ -6,24 +6,21 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class DetailActivity extends AppCompatActivity {
-    private ImageView imageView;
-    private TextView textView;
-    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        imageView = findViewById(R.id.recipe_image);
-        textView = findViewById(R.id.recipe_details);
+        ImageView imageView = findViewById(R.id.recipe_image);
+        TextView textView = findViewById(R.id.recipe_details);
         //Gets the data that is sent to it from the Main Activity and displays it
-        extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null){
-            String details = extras.getString("details");
-            int image = extras.getInt("image");
-            textView.setText(details);
-            imageView.setImageDrawable(getResources().getDrawable(image));
+            textView.setText(getIntent().getStringExtra("details"));
+            Glide.with(this).load(getIntent().getIntExtra("image", 0)).into(imageView);
         }
     }
 }
